@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es2020",         // mã js output hiện đại
+    "module": "commonjs",       // cho node.js
+    "rootDir": "src",           // thư mục chứa code typescript
+    "outDir": "dist",           // thư mục output sau khi build
+    "strict": true,             // bật kiểm tra type chặt chẽ
+    "esModuleInterop": true,    // cho phép import default từ commonjs
+    "skipLibCheck": true,       // bỏ qua kiểm tra type của thư viện
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,  // cho phép import file .json
+    "sourceMap": true,          // sinh ra file .map để debug
+    "types": ["node"]           // include type definitions cho node.js
+  },
+  "include": [                  // compile toàn bộ code trong src/
+    "src"
+  ],           
+  "exclude": [                  // bỏ qua thư mục không cần thiết
+    "node_modules",
+    "dist"
+  ]
+}
