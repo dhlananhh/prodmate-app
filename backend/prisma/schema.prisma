@@ -24,19 +24,28 @@ model Todo {
 }
 
 model Habit {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   name       String
   frequency  String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  startDate  DateTime?
+  endDate    DateTime?
+  status     String    @default("active")
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
   description String?
   date        DateTime
-  type        String   @default("other")
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  type        String    @default("other")
+  startDate   DateTime?
+  endDate     DateTime?
+  location    String?
+  notes       String?
+  status      String    @default("upcoming")
+  frequency   String    @default("once")
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
 }
