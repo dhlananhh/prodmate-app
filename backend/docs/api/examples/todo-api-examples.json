@@ -1,0 +1,52 @@
+{
+  "examples": {
+    "standalone": {
+      "POST /todos": {
+        "title": "Buy groceries",
+        "description": "Milk, bread, eggs, and fruits",
+        "deadline": "2026-04-30T18:00:00.000Z",
+        "priority": "high",
+        "status": "pending"
+      },
+      "PUT /todos/{id}": {
+        "title": "Buy groceries and cleaning supplies",
+        "description": "Milk, bread, eggs, fruits, and soap",
+        "deadline": "2026-05-01T18:00:00.000Z",
+        "priority": "medium",
+        "status": "in-progress"
+      }
+    },
+    "habit": {
+      "POST /habits/{habitId}/todos": {
+        "title": "Read 20 pages",
+        "description": "Daily reading habit",
+        "deadline": "2026-04-27T21:00:00.000Z",
+        "priority": "medium",
+        "status": "pending"
+      },
+      "PUT /habits/{habitId}/todos/{todoId}": {
+        "title": "Read 30 pages",
+        "description": "Increase daily reading goal",
+        "deadline": "2026-04-28T21:00:00.000Z",
+        "priority": "high",
+        "status": "in-progress"
+      }
+    },
+    "event": {
+      "POST /events/{eventId}/todos": {
+        "title": "Prepare presentation slides",
+        "description": "Slides for the upcoming workshop",
+        "deadline": "2026-05-01T09:00:00.000Z",
+        "priority": "high",
+        "status": "pending"
+      },
+      "PUT /events/{eventId}/todos/{todoId}": {
+        "title": "Finalize presentation slides",
+        "description": "Add graphs and polish design",
+        "deadline": "2026-05-01T12:00:00.000Z",
+        "priority": "high",
+        "status": "in-progress"
+      }
+    }
+  }
+}
