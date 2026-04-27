@@ -2,7 +2,7 @@
   "name": "prodmate-backend",
   "version": "1.0.0",
   "description": "Monolith backend for productivity webapp",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
