@@ -1,3 +1,3 @@
 export { errorHandler } from "./errorHandler";
 export { notFoundHandler } from "./notFoundHandler";
-export { logRequests } from "./requestLogger";
+export { requestLogger } from "./requestLogger";
