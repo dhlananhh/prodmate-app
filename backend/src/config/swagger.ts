@@ -70,6 +70,42 @@ const options: swaggerJsdoc.Options = {
           },
           required: [ "title", "date" ]
         },
+        HabitWithTodoInput: {
+          type: "object",
+          required: [ "name", "todo" ],
+          properties: {
+            name: { type: "string", example: "Morning Routine" },
+            todo: { $ref: "#/components/schemas/TodoInput" }
+          }
+        },
+        HabitWithEventInput: {
+          type: "object",
+          required: [ "name", "event" ],
+          properties: {
+            name: { type: "string", example: "Morning Routine" },
+            description: { type: "string", example: "Daily morning routine with meditation" },
+            frequency: { type: "string", enum: [ "daily", "weekly", "monthly" ], example: "daily" },
+            startDate: { type: "string", format: "date", example: "2026-05-01" },
+            endDate: { type: "string", format: "date", example: "2026-06-01" },
+            status: { type: "string", enum: [ "active", "paused", "completed" ], example: "active" },
+            event: {
+              type: "object",
+              required: [ "title", "date", "type", "status" ],
+              properties: {
+                title: { type: "string", example: "Meditation Session" },
+                description: { type: "string", example: "15 minutes of mindfulness meditation" },
+                date: { type: "string", format: "date-time", example: "2026-05-01T06:30:00Z" },
+                type: { type: "string", enum: [ "personal", "work", "health", "other" ], example: "health" },
+                status: { type: "string", enum: [ "scheduled", "completed", "cancelled" ], example: "scheduled" },
+                location: { type: "string", example: "Home living room" },
+                notes: { type: "string", example: "Prepare a quiet space" },
+                startDate: { type: "string", format: "date-time", example: "2026-05-01T06:30:00Z" },
+                endDate: { type: "string", format: "date-time", example: "2026-05-01T07:00:00Z" },
+                frequency: { type: "string", enum: [ "once", "daily", "weekly", "monthly" ], example: "once" }
+              }
+            }
+          }
+        },
       }
     },
   },
