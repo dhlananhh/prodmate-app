@@ -292,3 +292,67 @@ components:
         priority: { type: string, enum: [low, medium, high] }
         status: { type: string, enum: [pending, in-progress, completed] }
       required: [title, priority, status]
+    HabitInput:
+          type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              example: "Morning Exercise"
+            description:
+              type: string
+              example: "Daily habit to do stretching and light workout"
+            startDate:
+              type: string
+              format: date
+              example: "2026-05-01"
+            endDate:
+              type: string
+              format: date
+              example: "2026-06-01"
+    HabitWithTodoInput:
+      type: object
+      required:
+        - name
+        - todo
+      properties:
+        name:
+          type: string
+          example: "Read Books"
+        description:
+          type: string
+          example: "Read 20 pages every evening"
+        startDate:
+          type: string
+          format: date
+          example: "2026-05-01"
+        endDate:
+          type: string
+          format: date
+          example: "2026-06-01"
+        todo:
+          type: object
+          required:
+            - title
+            - priority
+            - status
+          properties:
+            title:
+              type: string
+              example: "Read Chapter 1"
+            description:
+              type: string
+              example: "Focus on introduction and first chapter"
+            deadline:
+              type: string
+              format: date-time
+              example: "2026-05-02T20:00:00Z"
+            priority:
+              type: string
+              enum: [low, medium, high]
+              example: "high"
+            status:
+              type: string
+              enum: [pending, in_progress, completed]
+              example: "pending"
