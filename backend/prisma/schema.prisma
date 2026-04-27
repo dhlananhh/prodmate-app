@@ -13,25 +13,32 @@ datasource db {
 }
 
 model Todo {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
   description String?
-  deadline    String?
-  priority    String   @default("medium")
-  status      String   @default("pending")
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  deadline    DateTime?
+  priority    String    @default("medium")
+  status      String    @default("pending")
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  habit       Habit?    @relation(fields: [habitId], references: [id])
+  habitId     Int?
+  event       Event?    @relation(fields: [eventId], references: [id])
+  eventId     Int?
 }
 
 model Habit {
-  id         Int       @id @default(autoincrement())
-  name       String
-  frequency  String
-  startDate  DateTime?
-  endDate    DateTime?
-  status     String    @default("active")
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  frequency   String
+  startDate   DateTime?
+  endDate     DateTime?
+  status      String    @default("active")
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  todos       Todo[]
+  events      Event[]
 }
 
 model Event {
@@ -48,4 +55,7 @@ model Event {
   frequency   String    @default("once")
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
+  todos       Todo[]
+  habit       Habit?    @relation(fields: [habitId], references: [id])
+  habitId     Int?
 }
