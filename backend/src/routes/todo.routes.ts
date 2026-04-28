@@ -10,8 +10,13 @@ import {
   updateTodoOfHabit,
   updateTodoOfEvent,
   deleteTodoOfHabit,
-  deleteTodoOfEvent
+  deleteTodoOfEvent,
+  getAllTodosOfHabit,
+  getTodoOfHabit,
+  getAllTodosOfEvent,
+  getTodoOfEvent
 } from "../controllers/todo.controller";
+
 
 const router = Router();
 
@@ -190,8 +195,15 @@ const router = Router();
  *         description: Todo of event deleted successfully
  *       404:
  *         description: Todo not found in event
+ * 
  */
 
+
+// ========================================
+
+/**
+ * HABIT CRUD (without relations)
+ */
 
 // get all todos
 // GET /api/todos
@@ -205,28 +217,54 @@ router.get("/:id", getTodoById);
 // POST /api/todos
 router.post("/", createTodo);
 
-// POST /api/habits/:habitId/todos (create a new todo for habit X)
-router.post("/habits/:habitId/todos", createTodoForHabit);
-
-// POST /api/events/:eventId/todos (create a new todo for event Y)
-router.post("/events/:eventId/todos", createTodoForEvent);
-
 // update an existing todo by id
 // PUT /api/todos/:id
 router.put("/:id", updateTodo);
-
-// PUT /api/habits/:habitId/todos/:todoId (update an existing todo for habit X)
-router.put("/habits/:habitId/todos/:todoId", updateTodoOfHabit);
-
-// PUT /api/events/:eventId/todos/:todoId (update an existing todo for event Y)
-router.put("/events/:eventId/todos/:todoId", updateTodoOfEvent);
 
 // delete a todo by id
 // DELETE /api/todos/:id
 router.delete("/:id", deleteTodo);
 
+
+// ========================================
+
+/**
+ * TODOS of HABIT X
+ */
+
+// GET /api/habits/:habitId/todos (get all todos of habit)
+router.get("/habits/:habitId/todos", getAllTodosOfHabit);
+
+// GET /api/habits/:habitId/todos/:todoId (get a specific todo of habit)
+router.get("/habits/:habitId/todos/:todoId", getTodoOfHabit);
+
+// POST /api/habits/:habitId/todos (create a new todo for habit X)
+router.post("/habits/:habitId/todos", createTodoForHabit);
+
+// PUT /api/habits/:habitId/todos/:todoId (update an existing todo for habit X)
+router.put("/habits/:habitId/todos/:todoId", updateTodoOfHabit);
+
 // DELETE /api/habits/:habitId/todos/:todoId (delete a todo for habit X)
 router.delete("/habits/:habitId/todos/:todoId", deleteTodoOfHabit);
+
+
+// ========================================
+
+/**
+ * TODOS of EVENT Y
+ */
+
+// GET /api/events/:eventId/todos (get all todos of event)
+router.get("/events/:eventId/todos", getAllTodosOfEvent);
+
+// GET /api/events/:eventId/todos/:todoId (get a specific todo of event)
+router.get("/events/:eventId/todos/:todoId", getTodoOfEvent);
+
+// POST /api/events/:eventId/todos (create a new todo for event Y)
+router.post("/events/:eventId/todos", createTodoForEvent);
+
+// PUT /api/events/:eventId/todos/:todoId (update an existing todo for event Y)
+router.put("/events/:eventId/todos/:todoId", updateTodoOfEvent);
 
 // DELETE /api/events/:eventId/todos/:todoId (delete a todo for event Y)
 router.delete("/events/:eventId/todos/:todoId", deleteTodoOfEvent);
