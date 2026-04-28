@@ -20,6 +20,7 @@
   "type": "commonjs",
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.7.0",
+    "bcrypt": "^6.0.0",
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
     "express": "^4.22.1",
@@ -27,6 +28,7 @@
     "express-rate-limit": "^8.4.0",
     "fs": "^0.0.1-security",
     "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.1",
     "path": "^0.12.7",
     "swagger-jsdoc": "^6.2.8",
@@ -37,8 +39,10 @@
   },
   "devDependencies": {
     "@prisma/client": "^7.8.0",
+    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/node": "^25.6.0",
     "@types/swagger-jsdoc": "^6.0.4",
