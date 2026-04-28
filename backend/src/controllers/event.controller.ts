@@ -15,7 +15,7 @@ import {
 
 
 /**
- * get all events
+ * get all events (without relations)
  */
 export const getAllEvents = async (
   req: Request,
@@ -37,7 +37,51 @@ export const getAllEvents = async (
 
 
 /**
- * get a single event by id
+ * get all events with todos
+ */
+export const getAllEventsWithTodos = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const events = await eventService.getAllEventsWithTodos();
+    res.json({
+      success: true,
+      message: "List of events with todos fetched successfully!",
+      data: events
+    });
+  } catch (error) {
+    logger.error("Error fetching events with todos: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch events with todos", error));
+  }
+}
+
+
+/**
+ * get all events with habit 
+ */
+export const getAllEventsWithHabit = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const events = await eventService.getAllEventsWithHabit();
+    res.json({
+      success: true,
+      message: "List of events with habit fetched successfully!",
+      data: events
+    });
+  } catch (error) {
+    logger.error("Error fetching events with habit: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch events with habit", error));
+  }
+};
+
+
+/**
+ * get a specific event by id (without relations)
  */
 export const getEventById = async (
   req: Request,
@@ -76,7 +120,87 @@ export const getEventById = async (
 
 
 /**
- * create a new event
+ * get a specific event with todos by id
+ */
+export const getEventWithTodosById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const idParsed = eventIdSchema.safeParse(req.params);
+    if (!idParsed.success) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid event ID",
+        errors: idParsed.error.message
+      });
+    }
+
+    const event = await eventService.getEventWithTodosById(Number(idParsed.data.id));
+    if (!event) {
+      return res.status(404).json({
+        success: false,
+        error: {
+          message: "Event not found"
+        }
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Event with todos fetched successfully!",
+      data: event
+    });
+  } catch (error) {
+    logger.error("Error fetching event with todos: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch event with todos", error));
+  }
+}
+
+
+/**
+ * get a specific event with habit by id
+ */
+export const getEventWithHabitById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const idParsed = eventIdSchema.safeParse(req.params);
+    if (!idParsed.success) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid event ID",
+        errors: idParsed.error.message
+      });
+    }
+
+    const event = await eventService.getEventWithHabitById(Number(idParsed.data.id));
+    if (!event) {
+      return res.status(404).json({
+        success: false,
+        error: {
+          message: "Event not found"
+        }
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Event with habit fetched successfully!",
+      data: event
+    });
+  } catch (error) {
+    logger.error("Error fetching event with habit: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch event with habit", error));
+  }
+}
+
+
+/**
+ * create a new event (without relations)
  */
 export const createEvent = async (
   req: Request,
@@ -95,7 +219,7 @@ export const createEvent = async (
 
     const eventData = {
       title: parsed.data.title,
-      date: new Date(parsed.data.date),
+      date: new Date(parsed.data.date!),
       type: parsed.data.type,
       frequency: parsed.data.frequency,
       status: parsed.data.status,
@@ -120,7 +244,7 @@ export const createEvent = async (
 
 
 /**
- * update an existing event
+ * update an existing event (without relations)
  */
 export const updateEvent = async (
   req: Request,
@@ -171,7 +295,109 @@ export const updateEvent = async (
 
 
 /**
- * delete an event
+ * update an existing event with todos
+ */
+export const updateEventWithTodos = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const idParsed = eventIdSchema.safeParse(req.params);
+    if (!idParsed.success) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid event ID",
+        errors: idParsed.error.message
+      });
+    }
+
+    const bodyParsed = updateEventSchema.safeParse(req.body);
+    if (!bodyParsed.success) {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors: bodyParsed.error.message
+      });
+    }
+
+    const eventData = {
+      ...bodyParsed.data,
+      date: bodyParsed.data.date ? new Date(bodyParsed.data.date) : undefined,
+      startDate: bodyParsed.data.startDate ? new Date(bodyParsed.data.startDate) : undefined,
+      endDate: bodyParsed.data.endDate ? new Date(bodyParsed.data.endDate) : undefined
+    };
+
+    const event = await eventService.updateEventWithTodos(
+      Number(idParsed.data.id),
+      eventData
+    );
+
+    res.json({
+      success: true,
+      message: "Event with todos updated successfully!",
+      data: event
+    });
+  } catch (error) {
+    logger.error("Error updating event with todos: " + (error as Error).message);
+    next(new ApiError(500, "Failed to update event with todos", error));
+  }
+}
+
+
+/**
+ * update an existing event with habit
+ */
+export const updateEventWithHabit = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const idParsed = eventIdSchema.safeParse(req.params);
+    if (!idParsed.success) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid event ID",
+        errors: idParsed.error.message
+      });
+    }
+
+    const bodyParsed = updateEventSchema.safeParse(req.body);
+    if (!bodyParsed.success) {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors: bodyParsed.error.message
+      });
+    }
+
+    const eventData = {
+      ...bodyParsed.data,
+      date: bodyParsed.data.date ? new Date(bodyParsed.data.date) : undefined,
+      startDate: bodyParsed.data.startDate ? new Date(bodyParsed.data.startDate) : undefined,
+      endDate: bodyParsed.data.endDate ? new Date(bodyParsed.data.endDate) : undefined
+    };
+
+    const event = await eventService.updateEventWithHabit(
+      Number(idParsed.data.id),
+      eventData
+    );
+
+    res.json({
+      success: true,
+      message: "Event with habit updated successfully!",
+      data: event
+    });
+  } catch (error) {
+    logger.error("Error updating event with habit: " + (error as Error).message);
+    next(new ApiError(500, "Failed to update event with habit", error));
+  }
+};
+
+
+/**
+ * delete an event (without relations)
  */
 export const deleteEvent = async (
   req: Request,
@@ -196,5 +422,65 @@ export const deleteEvent = async (
   } catch (error) {
     logger.error("Error deleting event: " + (error as Error).message);
     next(new ApiError(500, "Failed to delete event", error));
+  }
+};
+
+
+/**
+ * delete an event with todos
+ */
+export const deleteEventWithTodos = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const idParsed = eventIdSchema.safeParse(req.params);
+    if (!idParsed.success) {
+      return res.status(400).json({
+        success: false,
+        errors: idParsed.error.message
+      });
+    }
+
+    const event = await eventService.deleteEventWithTodos(Number(idParsed.data.id));
+    res.json({
+      success: true,
+      message: "Event with todos deleted successfully!",
+      data: event
+    });
+  } catch (error) {
+    logger.error("Error deleting event with todos: " + (error as Error).message);
+    next(new ApiError(500, "Failed to delete event with todos", error));
+  }
+};
+
+
+/**
+ * delete an event with habit
+ */
+export const deleteEventWithHabit = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const idParsed = eventIdSchema.safeParse(req.params);
+    if (!idParsed.success) {
+      return res.status(400).json({
+        success: false,
+        errors: idParsed.error.message
+      });
+    }
+
+    const event = await eventService.deleteEventWithHabit(Number(idParsed.data.id));
+    res.json({
+      success: true,
+      message: "Event with habit deleted successfully!",
+      data: event
+    });
+  } catch (error) {
+    logger.error("Error deleting event with habit: " + (error as Error).message);
+    next(new ApiError(500, "Failed to delete event with habit", error));
   }
 };
