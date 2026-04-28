@@ -1,15 +1,20 @@
-import {
-  Router,
-  Request,
-  Response
-} from "express";
+import { Router } from "express";
 import {
   createEvent,
   deleteEvent,
+  deleteEventWithHabit,
+  deleteEventWithTodos,
   getAllEvents,
+  getAllEventsWithHabit,
+  getAllEventsWithTodos,
   getEventById,
-  updateEvent
+  getEventWithHabitById,
+  getEventWithTodosById,
+  updateEvent,
+  updateEventWithHabit,
+  updateEventWithTodos
 } from "../controllers/event.controller";
+
 
 const router = Router();
 
@@ -18,20 +23,14 @@ const router = Router();
  * @openapi
  * /events:
  *   get:
- *     summary: Lấy danh sách tất cả events
+ *     summary: Retrieve all events
  *     tags:
  *       - Events
  *     responses:
  *       200:
- *         description: Danh sách events
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Event'
+ *         description: A list of events
  *   post:
- *     summary: Tạo mới một event
+ *     summary: Create a new event
  *     tags:
  *       - Events
  *     requestBody:
@@ -42,18 +41,11 @@ const router = Router();
  *             $ref: '#/components/schemas/EventInput'
  *     responses:
  *       201:
- *         description: Event được tạo thành công
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Event'
- */
-
-/**
- * @openapi
+ *         description: Event created successfully
+ *
  * /events/{id}:
  *   get:
- *     summary: Lấy thông tin chi tiết một event theo ID
+ *     summary: Retrieve an event by ID
  *     tags:
  *       - Events
  *     parameters:
@@ -64,15 +56,73 @@ const router = Router();
  *           type: integer
  *     responses:
  *       200:
- *         description: Thông tin event
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Event'
+ *         description: Event details
  *       404:
- *         description: Không tìm thấy event
+ *         description: Event not found
  *   put:
- *     summary: Cập nhật một event theo ID
+ *     summary: Update an event by ID
+ *     tags:
+ *       - Events
+ *   delete:
+ *     summary: Delete an event by ID
+ *     tags:
+ *       - Events
+ *
+ * /events/todos:
+ *   get:
+ *     summary: Retrieve all events with their todos
+ *     tags:
+ *       - Events
+ *     responses:
+ *       200:
+ *         description: A list of events with todos
+ *
+ * /events/{id}/todos:
+ *   get:
+ *     summary: Retrieve a specific event with its todos
+ *     tags:
+ *       - Events
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Event with todos details
+ *       404:
+ *         description: Event not found
+ *
+ * /events/habit:
+ *   get:
+ *     summary: Retrieve all events with their linked habit
+ *     tags:
+ *       - Events
+ *     responses:
+ *       200:
+ *         description: A list of events with habit relation
+ *
+ * /events/{id}/habit:
+ *   get:
+ *     summary: Retrieve a specific event with its linked habit
+ *     tags:
+ *       - Events
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Event with habit details
+ *       404:
+ *         description: Event not found
+ * 
+ * /events/{id}/todos:
+ *   put:
+ *     summary: Update an event with its todos
  *     tags:
  *       - Events
  *     parameters:
@@ -89,15 +139,11 @@ const router = Router();
  *             $ref: '#/components/schemas/EventInput'
  *     responses:
  *       200:
- *         description: Event đã được cập nhật
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Event'
+ *         description: Event with todos updated successfully
  *       404:
- *         description: Không tìm thấy event
+ *         description: Event not found
  *   delete:
- *     summary: Xóa một event theo ID
+ *     summary: Delete an event with its todos
  *     tags:
  *       - Events
  *     parameters:
@@ -107,12 +153,56 @@ const router = Router();
  *         schema:
  *           type: integer
  *     responses:
- *       204:
- *         description: Event đã được xóa thành công
+ *       200:
+ *         description: Event with todos deleted successfully
  *       404:
- *         description: Không tìm thấy event
+ *         description: Event not found
+ *
+ * /events/{id}/habit:
+ *   put:
+ *     summary: Update an event with its linked habit
+ *     tags:
+ *       - Events
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/EventInput'
+ *     responses:
+ *       200:
+ *         description: Event with habit updated successfully
+ *       404:
+ *         description: Event not found
+ *   delete:
+ *     summary: Delete an event with its linked habit
+ *     tags:
+ *       - Events
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Event with habit deleted successfully
+ *       404:
+ *         description: Event not found
  */
 
+
+// ========================================
+
+/**
+ * EVENTS CRUD (without relations)
+ */
 
 // Get all events
 // GET /api/events
@@ -133,5 +223,44 @@ router.put("/:id", updateEvent);
 // Delete an event
 // DELETE /api/events/:id
 router.delete("/:id", deleteEvent);
+
+
+// ========================================
+
+/**
+ * EVENTS with TODOS
+ */
+
+// GET /api/events/todos
+router.get("/events/todos", getAllEventsWithTodos);
+
+// GET /api/events/:id/todos
+router.get("/events/:id/todos", getEventWithTodosById);
+
+// PUT /api/events/:id/todos
+router.put("/events/:id/todos", updateEventWithTodos);
+
+// DELETE /api/events/:id/todos
+router.delete("/events/:id/todos", deleteEventWithTodos);
+
+
+// ========================================
+
+/**
+ * EVENTS with HABIT
+ */
+
+// GET /api/events/habit
+router.get("/events/habit", getAllEventsWithHabit);
+
+// GET /api/events/:id/habit
+router.get("/events/:id/habit", getEventWithHabitById);
+
+// PUT /api/events/:id/habit
+router.put("/events/:id/habit", updateEventWithHabit);
+
+// DELETE /api/events/:id/habit
+router.delete("/events/:id/habit", deleteEventWithHabit);
+
 
 export default router;
