@@ -154,3 +154,7 @@ vite.config.ts.timestamp-*
 
 # Dist folder
 /dist/
+
+# Batch files for automatically committing to Git
+commit-all.bat
+commit-code.bat
