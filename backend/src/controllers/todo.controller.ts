@@ -78,14 +78,14 @@ export const getTodoById = async (
 /**
  * get all todos of habit X
  */
-export const getTodosOfHabit = async (
+export const getAllTodosOfHabit = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const habitId = Number(req.params.habitId);
-    const todos = await todoService.getTodosByHabit(habitId);
+    const todos = await todoService.getAllTodosByHabit(habitId);
     res.json({
       success: true,
       message: "Todos of habit fetched successfully!",
@@ -132,14 +132,14 @@ export const getTodoOfHabit = async (
 /**
  * get all todos in event Y
  */
-export const getTodosOfEvent = async (
+export const getAllTodosOfEvent = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const eventId = Number(req.params.eventId);
-    const todos = await todoService.getTodosByEvent(eventId);
+    const todos = await todoService.getAllTodosByEvent(eventId);
     res.json({
       success: true,
       message: "Todos of event fetched successfully!",
@@ -204,7 +204,7 @@ export const createTodo = async (
     const todoData = {
       ...parsed.data,
       description: parsed.data.description ?? null,
-      deadline: parsed.data.deadline ?? null
+      deadline: parsed.data.deadline ? new Date(parsed.data.deadline) : null
     };
 
     const todo: Todo = await todoService.createTodo(todoData);
@@ -214,8 +214,8 @@ export const createTodo = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error creating todo: " + (error as Error).message);
-    next(new ApiError(500, "Failed to create todo", error));
+    logger.error("Error creating a new todo: " + (error as Error).message);
+    next(new ApiError(500, "Failed to create a new todo", error));
   }
 };
 
