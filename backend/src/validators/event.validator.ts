@@ -34,22 +34,11 @@ export const eventBaseSchema = z.object({
     .min(3, "Title must be at least 3 characters")
     .max(255, "Title must be at most 255 characters long."),
   description: z.string().optional(),
-  date: z.string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "Date must be a valid ISO date string",
-    }),
+  date: z.date().optional(),
   type: z.enum(EventType).default(EventType.OTHER),
   frequency: z.enum(EventFrequency).default(EventFrequency.ONCE),
-  startDate: z.string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "Start date must be a valid ISO date string",
-    })
-    .optional(),
-  endDate: z.string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "End date must be a valid ISO date string",
-    })
-    .optional(),
+  startDate: z.date().optional(),
+  endDate: z.date().optional(),
   location: z.string().optional(),
   notes: z.string().optional(),
   status: z.enum(EventStatus).default(EventStatus.UPCOMING),
@@ -82,22 +71,10 @@ export const createEventSchema = eventBaseSchema;
 export const updateEventSchema = z.object({
   title: z.string().min(3).optional(),
   description: z.string().optional(),
-  date: z.string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "Date must be a valid ISO date string",
-    })
-    .optional(),
+  date: z.date().optional(),
   type: z.enum(EventType).optional(),
-  startDate: z.string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "Start date must be a valid ISO date string",
-    })
-    .optional(),
-  endDate: z.string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "End date must be a valid ISO date string",
-    })
-    .optional(),
+  startDate: z.date().optional(),
+  endDate: z.date().optional(),
   location: z.string().optional(),
   notes: z.string().optional(),
   status: z.enum(EventStatus).optional(),
