@@ -19,8 +19,8 @@ model Todo {
   deadline    DateTime?
   priority    String    @default("medium")
   status      String    @default("pending")
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
   habit       Habit?    @relation(fields: [habitId], references: [id])
   habitId     Int?
   event       Event?    @relation(fields: [eventId], references: [id])
@@ -35,8 +35,8 @@ model Habit {
   startDate   DateTime?
   endDate     DateTime?
   status      String    @default("active")
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
   todos       Todo[]
   events      Event[]
 }
@@ -53,9 +53,30 @@ model Event {
   notes       String?
   status      String    @default("upcoming")
   frequency   String    @default("once")
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
   todos       Todo[]
   habit       Habit?    @relation(fields: [habitId], references: [id])
   habitId     Int?
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  username      String         @unique
+  password      String
+  name          String?
+  role          String         @default("user") // "user" or "admin"
+  createdAt     DateTime?      @default(now())
+  updatedAt     DateTime?      @updatedAt
+  refreshTokens RefreshToken[]
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
 }
