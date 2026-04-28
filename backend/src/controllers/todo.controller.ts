@@ -30,7 +30,7 @@ export const getAllTodos = async (
       data: todos
     });
   } catch (error) {
-    logger.error("Error fetching todos: " + (error as Error).message);
+    logger.error("Error when fetching todos: " + (error as Error).message);
     next(new ApiError(500, "Failed to fetch todos", error));
   }
 };
@@ -69,7 +69,7 @@ export const getTodoById = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error fetching todo: " + (error as Error).message);
+    logger.error("Error when fetching todo: " + (error as Error).message);
     next(new ApiError(500, "Failed to fetch todo", error));
   }
 };
@@ -92,7 +92,7 @@ export const getAllTodosOfHabit = async (
       data: todos
     });
   } catch (error) {
-    logger.error("Error fetching todos of habit: " + (error as Error).message);
+    logger.error("Error when fetching todos of habit: " + (error as Error).message);
     next(new ApiError(500, "Failed to fetch todos of habit", error));
   }
 };
@@ -123,7 +123,7 @@ export const getTodoOfHabit = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error fetching todo of habit: " + (error as Error).message);
+    logger.error("Error when fetching todo of habit: " + (error as Error).message);
     next(new ApiError(500, "Failed to fetch todo of habit", error));
   }
 };
@@ -146,7 +146,7 @@ export const getAllTodosOfEvent = async (
       data: todos
     });
   } catch (error) {
-    logger.error("Error fetching todos of event: " + (error as Error).message);
+    logger.error("Error when fetching todos of event: " + (error as Error).message);
     next(new ApiError(500, "Failed to fetch todos of event", error));
   }
 };
@@ -177,7 +177,7 @@ export const getTodoOfEvent = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error fetching todo of event: " + (error as Error).message);
+    logger.error("Error when fetching todo of event: " + (error as Error).message);
     next(new ApiError(500, "Failed to fetch todo of event", error));
   }
 };
@@ -214,7 +214,7 @@ export const createTodo = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error creating a new todo: " + (error as Error).message);
+    logger.error("Error when creating a new todo: " + (error as Error).message);
     next(new ApiError(500, "Failed to create a new todo", error));
   }
 };
@@ -253,7 +253,7 @@ export const createTodoForHabit = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error creating todo for habit: " + (error as Error).message);
+    logger.error("Error when creating a new todo for habit: " + (error as Error).message);
     next(new ApiError(500, "Failed to create todo for habit", error));
   }
 };
@@ -292,7 +292,7 @@ export const createTodoForEvent = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error creating todo for event: " + (error as Error).message);
+    logger.error("Error when creating a new todo for event: " + (error as Error).message);
     next(new ApiError(500, "Failed to create todo for event", error));
   }
 };
@@ -335,7 +335,7 @@ export const updateTodo = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error updating todo: " + (error as Error).message);
+    logger.error("Error when updating an existing todo: " + (error as Error).message);
     next(new ApiError(500, "Failed to update todo", error));
   }
 };
@@ -365,7 +365,7 @@ export const updateTodoOfHabit = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error updating todo of habit: " + (error as Error).message);
+    logger.error("Error when updating an existing todo of habit: " + (error as Error).message);
     next(new ApiError(500, "Failed to update todo of habit", error));
   }
 }
@@ -396,7 +396,7 @@ export const updateTodoOfEvent = async (
     });
 
   } catch (error) {
-    logger.error("Error updating todo of event: " + (error as Error).message);
+    logger.error("Error when updating an existing todo of event: " + (error as Error).message);
     next(new ApiError(500, "Failed to update todo of event", error));
   }
 };
@@ -426,7 +426,7 @@ export const deleteTodo = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error deleting todo: " + (error as Error).message);
+    logger.error("Error when deleting a todo: " + (error as Error).message);
     next(new ApiError(500, "Failed to delete todo", error));
   }
 };
@@ -451,7 +451,7 @@ export const deleteTodoOfHabit = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error deleting todo of habit: " + (error as Error).message);
+    logger.error("Error when deleting a todo of habit: " + (error as Error).message);
     next(new ApiError(500, "Failed to delete todo of habit", error));
   }
 };
@@ -476,7 +476,7 @@ export const deleteTodoOfEvent = async (
       data: todo
     });
   } catch (error) {
-    logger.error("Error deleting todo of event: " + (error as Error).message);
+    logger.error("Error when deleting a todo of event: " + (error as Error).message);
     next(new ApiError(500, "Failed to delete todo of event", error));
   }
 };

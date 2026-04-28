@@ -30,8 +30,8 @@ export const getAllEvents = async (
       data: events
     });
   } catch (error) {
-    logger.error("Error fetching events: " + (error as Error).message);
-    next(new ApiError(500, "Failed to fetch events", error));
+    logger.error("Error when fetching list of events: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch list of events", error));
   }
 }
 
@@ -52,8 +52,8 @@ export const getAllEventsWithTodos = async (
       data: events
     });
   } catch (error) {
-    logger.error("Error fetching events with todos: " + (error as Error).message);
-    next(new ApiError(500, "Failed to fetch events with todos", error));
+    logger.error("Error when fetching list of events with todos: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch list of events with todos", error));
   }
 }
 
@@ -74,8 +74,8 @@ export const getAllEventsWithHabit = async (
       data: events
     });
   } catch (error) {
-    logger.error("Error fetching events with habit: " + (error as Error).message);
-    next(new ApiError(500, "Failed to fetch events with habit", error));
+    logger.error("Error when fetching list of events with habit: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch list of events with habit", error));
   }
 };
 
@@ -113,8 +113,8 @@ export const getEventById = async (
       data: event
     })
   } catch (error) {
-    logger.error("Error fetching event: " + (error as Error).message);
-    next(new ApiError(500, "Failed to fetch event", error));
+    logger.error("Error when fetching an event: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch an event", error));
   }
 }
 
@@ -153,8 +153,8 @@ export const getEventWithTodosById = async (
       data: event
     });
   } catch (error) {
-    logger.error("Error fetching event with todos: " + (error as Error).message);
-    next(new ApiError(500, "Failed to fetch event with todos", error));
+    logger.error("Error when fetching an event with todos: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch an event with todos", error));
   }
 }
 
@@ -193,8 +193,8 @@ export const getEventWithHabitById = async (
       data: event
     });
   } catch (error) {
-    logger.error("Error fetching event with habit: " + (error as Error).message);
-    next(new ApiError(500, "Failed to fetch event with habit", error));
+    logger.error("Error when fetching an event with habit: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch an event with habit", error));
   }
 }
 
@@ -237,8 +237,8 @@ export const createEvent = async (
       data: event
     });
   } catch (error) {
-    logger.error("Error creating event: " + (error as Error).message);
-    next(new ApiError(500, "Failed to create event", error));
+    logger.error("Error when creating a new event: " + (error as Error).message);
+    next(new ApiError(500, "Failed to create a new event", error));
   }
 };
 
@@ -288,8 +288,8 @@ export const updateEvent = async (
       data: event
     })
   } catch (error) {
-    logger.error("Error updating event: " + (error as Error).message);
-    next(new ApiError(500, "Failed to update event", error));
+    logger.error("Error when updating an existing event: " + (error as Error).message);
+    next(new ApiError(500, "Failed to update an existing event", error));
   }
 }
 
@@ -339,8 +339,8 @@ export const updateEventWithTodos = async (
       data: event
     });
   } catch (error) {
-    logger.error("Error updating event with todos: " + (error as Error).message);
-    next(new ApiError(500, "Failed to update event with todos", error));
+    logger.error("Error when updating an existing event with todos: " + (error as Error).message);
+    next(new ApiError(500, "Failed to update an existing event with todos", error));
   }
 }
 
@@ -390,8 +390,8 @@ export const updateEventWithHabit = async (
       data: event
     });
   } catch (error) {
-    logger.error("Error updating event with habit: " + (error as Error).message);
-    next(new ApiError(500, "Failed to update event with habit", error));
+    logger.error("Error when updating an existing event with habit: " + (error as Error).message);
+    next(new ApiError(500, "Failed to update an existing event with habit", error));
   }
 };
 
@@ -420,8 +420,8 @@ export const deleteEvent = async (
       data: event
     });
   } catch (error) {
-    logger.error("Error deleting event: " + (error as Error).message);
-    next(new ApiError(500, "Failed to delete event", error));
+    logger.error("Error when deleting an event: " + (error as Error).message);
+    next(new ApiError(500, "Failed to delete an event", error));
   }
 };
 
@@ -450,8 +450,8 @@ export const deleteEventWithTodos = async (
       data: event
     });
   } catch (error) {
-    logger.error("Error deleting event with todos: " + (error as Error).message);
-    next(new ApiError(500, "Failed to delete event with todos", error));
+    logger.error("Error when deleting an event with todos: " + (error as Error).message);
+    next(new ApiError(500, "Failed to delete an event with todos", error));
   }
 };
 
@@ -480,7 +480,7 @@ export const deleteEventWithHabit = async (
       data: event
     });
   } catch (error) {
-    logger.error("Error deleting event with habit: " + (error as Error).message);
-    next(new ApiError(500, "Failed to delete event with habit", error));
+    logger.error("Error wehn deleting an event with habit: " + (error as Error).message);
+    next(new ApiError(500, "Failed to delete an event with habit", error));
   }
 };

@@ -32,8 +32,8 @@ export const getAllHabits = async (
       data: habits
     });
   } catch (error) {
-    logger.error("Error fetching habits: " + (error as Error).message);
-    next(new ApiError(500, "Failed to fetch habits", error));
+    logger.error("Error when fetching list of habits: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch list of habits", error));
   }
 };
 
@@ -54,8 +54,8 @@ export const getAllHabitsWithTodos = async (
       data: habits,
     });
   } catch (error) {
-    logger.error("Error fetching all habits with todos: " + (error as Error).message);
-    next(new ApiError(500, "Failed to fetch all habits with todos", error));
+    logger.error("Error when fetching list of all habits with todos: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch all list of habits with todos", error));
   }
 }
 
@@ -76,8 +76,8 @@ export const getAllHabitsWithEvents = async (
       data: habits,
     });
   } catch (error) {
-    logger.error("Error fetching all habits with events: " + (error as Error).message);
-    next(new ApiError(500, "Failed to fetch all habits with events", error));
+    logger.error("Error when fetching list of all habits with events: " + (error as Error).message);
+    next(new ApiError(500, "Failed to fetch list of all habits with events", error));
   }
 }
 
@@ -114,7 +114,7 @@ export const getHabitWithTodosById = async (
       data: habit,
     });
   } catch (error) {
-    logger.error("Error fetching a specific habit with todos by id: " + (error as Error).message);
+    logger.error("Error when fetching a specific habit with todos by id: " + (error as Error).message);
     next(new ApiError(500, "Failed to fetch a specific habit with todos by id", error));
   }
 }
@@ -152,7 +152,7 @@ export const getHabitWithEventsById = async (
       data: habit,
     });
   } catch (error) {
-    logger.error("Error fetching a specific habit with events by id: " + (error as Error).message);
+    logger.error("Error when fetching a specific habit with events by id: " + (error as Error).message);
     next(new ApiError(500, "Failed to fetch a specific habit with events by id", error));
   }
 }
@@ -192,7 +192,7 @@ export const getHabitById = async (
       data: habit
     });
   } catch (error) {
-    logger.error("Error fetching habit: " + (error as Error).message);
+    logger.error("Error when fetching habit: " + (error as Error).message);
     next(new ApiError(500, "Failed to fetch habit", error));
   }
 };
@@ -229,8 +229,8 @@ export const createHabit = async (
       data: habit
     });
   } catch (error) {
-    logger.error("Error creating a new habit: " + (error as Error).message);
-    next(new ApiError(500, "Failed to create habit", error));
+    logger.error("Error when creating a new habit: " + (error as Error).message);
+    next(new ApiError(500, "Failed to create a new habit", error));
   }
 };
 
@@ -284,7 +284,7 @@ export const createHabitWithTodo = async (
       data: habit,
     });
   } catch (error) {
-    logger.error("Error creating a new habit with an initial todo: " + (error as Error).message);
+    logger.error("Error when creating a new habit with an initial todo: " + (error as Error).message);
     next(new ApiError(500, "Failed to create a new habit with an initial todo", error));
   }
 }
@@ -347,7 +347,7 @@ export const createHabitWithEvent = async (
       data: habit,
     });
   } catch (error) {
-    logger.error("Error creating a new habit with an initial event: " + (error as Error).message);
+    logger.error("Error when creating a new habit with an initial event: " + (error as Error).message);
     next(new ApiError(500, "Failed to create a new habit with an initial event", error));
   }
 }
@@ -397,8 +397,8 @@ export const updateHabit = async (
       data: habit
     });
   } catch (error) {
-    logger.error("Error updating habit: " + (error as Error).message);
-    next(new ApiError(500, "Failed to update habit", error));
+    logger.error("Error when updating an existing habit: " + (error as Error).message);
+    next(new ApiError(500, "Failed to update an existing habit", error));
   }
 };
 
@@ -440,8 +440,8 @@ export const updateHabitWithTodos = async (
       data: habit
     });
   } catch (error) {
-    logger.error("Error updating habit with todos: " + (error as Error).message);
-    next(new ApiError(500, "Failed to update habit with todos", error));
+    logger.error("Error when updating an existing habit with todos: " + (error as Error).message);
+    next(new ApiError(500, "Failed to update an existing habit with todos", error));
   }
 };
 
@@ -483,8 +483,8 @@ export const updateHabitWithEvents = async (
       data: habit
     });
   } catch (error) {
-    logger.error("Error updating habit with events: " + (error as Error).message);
-    next(new ApiError(500, "Failed to update habit with events", error));
+    logger.error("Error when updating an existing habit with events: " + (error as Error).message);
+    next(new ApiError(500, "Failed to update an existing habit with events", error));
   }
 };
 
@@ -515,8 +515,8 @@ export const deleteHabit = async (
       data: habit
     });
   } catch (error) {
-    logger.error("Error deleting habit: " + (error as Error).message);
-    next(new ApiError(500, "Failed to delete habit", error));
+    logger.error("Error when deleting a habit: " + (error as Error).message);
+    next(new ApiError(500, "Failed to delete a habit", error));
   }
 };
 
@@ -546,8 +546,8 @@ export const deleteHabitWithTodos = async (
       data: habit
     });
   } catch (error) {
-    logger.error("Error deleting habit with todos: " + (error as Error).message);
-    next(new ApiError(500, "Failed to delete habit with todos", error));
+    logger.error("Error when deleting a habit with todos: " + (error as Error).message);
+    next(new ApiError(500, "Failed to delete a habit with todos", error));
   }
 };
 
@@ -577,7 +577,7 @@ export const deleteHabitWithEvents = async (
       data: habit
     });
   } catch (error) {
-    logger.error("Error deleting habit with events: " + (error as Error).message);
-    next(new ApiError(500, "Failed to delete habit with events", error));
+    logger.error("Error when deleting a habit with events: " + (error as Error).message);
+    next(new ApiError(500, "Failed to delete a habit with events", error));
   }
 };
