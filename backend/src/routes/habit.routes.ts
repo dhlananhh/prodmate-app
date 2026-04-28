@@ -1,11 +1,22 @@
 import { Router } from "express";
 import {
   createHabit,
+  createHabitWithEvent,
+  createHabitWithTodo,
   deleteHabit,
+  deleteHabitWithEvents,
+  deleteHabitWithTodos,
   getAllHabits,
+  getAllHabitsWithEvents,
+  getAllHabitsWithTodos,
   getHabitById,
-  updateHabit
+  getHabitWithEventsById,
+  getHabitWithTodosById,
+  updateHabit,
+  updateHabitWithEvents,
+  updateHabitWithTodos
 } from "../controllers/habit.controller";
+
 
 const router = Router();
 
@@ -14,20 +25,14 @@ const router = Router();
  * @openapi
  * /habits:
  *   get:
- *     summary: Lấy danh sách tất cả habits
+ *     summary: Retrieve all habits (without relations)
  *     tags:
  *       - Habits
  *     responses:
  *       200:
- *         description: Danh sách habits
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Habit'
+ *         description: A list of habits
  *   post:
- *     summary: Tạo mới một habit
+ *     summary: Create a new habit
  *     tags:
  *       - Habits
  *     requestBody:
@@ -38,18 +43,11 @@ const router = Router();
  *             $ref: '#/components/schemas/HabitInput'
  *     responses:
  *       201:
- *         description: Habit được tạo thành công
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Habit'
- */
-
-/**
- * @openapi
+ *         description: Habit created successfully
+ *
  * /habits/{id}:
  *   get:
- *     summary: Lấy thông tin chi tiết một habit theo ID
+ *     summary: Retrieve a habit by ID
  *     tags:
  *       - Habits
  *     parameters:
@@ -60,15 +58,30 @@ const router = Router();
  *           type: integer
  *     responses:
  *       200:
- *         description: Thông tin habit
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Habit'
+ *         description: Habit details
  *       404:
- *         description: Không tìm thấy habit
+ *         description: Habit not found
  *   put:
- *     summary: Cập nhật một habit theo ID
+ *     summary: Update a habit by ID
+ *     tags:
+ *       - Habits
+ *   delete:
+ *     summary: Delete a habit by ID
+ *     tags:
+ *       - Habits
+ *
+ * /habits/todos:
+ *   get:
+ *     summary: Retrieve all habits with their todos
+ *     tags:
+ *       - Habits
+ *     responses:
+ *       200:
+ *         description: A list of habits with todos
+ *
+ * /habits/{id}/todos:
+ *   get:
+ *     summary: Retrieve a habit with its todos by ID
  *     tags:
  *       - Habits
  *     parameters:
@@ -77,23 +90,37 @@ const router = Router();
  *         required: true
  *         schema:
  *           type: integer
+ *   post:
+ *     summary: Create a habit with an initial todo
+ *     tags:
+ *       - Habits
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/HabitInput'
+ *             $ref: '#/components/schemas/HabitWithTodoInput'
+ *   put:
+ *     summary: Update a habit with todos
+ *     tags:
+ *       - Habits
+ *   delete:
+ *     summary: Delete a habit with todos
+ *     tags:
+ *       - Habits
+ *
+ * /habits/events:
+ *   get:
+ *     summary: Retrieve all habits with their events
+ *     tags:
+ *       - Habits
  *     responses:
  *       200:
- *         description: Habit đã được cập nhật
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Habit'
- *       404:
- *         description: Không tìm thấy habit
- *   delete:
- *     summary: Xóa một habit theo ID
+ *         description: A list of habits with events
+ *
+ * /habits/{id}/events:
+ *   get:
+ *     summary: Retrieve a habit with its events by ID
  *     tags:
  *       - Habits
  *     parameters:
@@ -102,13 +129,33 @@ const router = Router();
  *         required: true
  *         schema:
  *           type: integer
- *     responses:
- *       204:
- *         description: Habit đã được xóa thành công
- *       404:
- *         description: Không tìm thấy habit
+ *   post:
+ *     summary: Create a habit with an initial event
+ *     tags:
+ *       - Habits
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/HabitWithEventInput'
+ *   put:
+ *     summary: Update a habit with events
+ *     tags:
+ *       - Habits
+ *   delete:
+ *     summary: Delete a habit with events
+ *     tags:
+ *       - Habits
  */
 
+
+
+// ========================================
+
+/**
+ * HABIT CRUD (without relations)
+ */
 
 // Get all habits
 // GET /api/habits
@@ -129,5 +176,30 @@ router.put("/:id", updateHabit);
 // Delete a habit
 // DELETE /api/habits/:id
 router.delete("/:id", deleteHabit);
+
+
+// ========================================
+
+/**
+ * HABITS with TODOS
+ */
+router.get("/habits/todos", getAllHabitsWithTodos);
+router.get("/habits/:id/todos", getHabitWithTodosById);
+router.post("/habits/:id/todos", createHabitWithTodo);
+router.put("/habits/:id/todos", updateHabitWithTodos);
+router.delete("/habits/:id/todos", deleteHabitWithTodos);
+
+
+// ========================================
+
+/**
+ * HABITS with EVENT
+ */
+router.get("/habits/events", getAllHabitsWithEvents);
+router.get("/habits/:id/events", getHabitWithEventsById);
+router.post("/habits/:id/events", createHabitWithEvent);
+router.put("/habits/:id/events", updateHabitWithEvents);
+router.delete("/habits/:id/events", deleteHabitWithEvents);
+
 
 export default router;
