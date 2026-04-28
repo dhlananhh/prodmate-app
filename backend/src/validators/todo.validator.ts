@@ -25,11 +25,7 @@ export const todoBaseSchema = z.object({
     .min(3, "Title must be at least 3 characters")
     .max(255, "Title must be at most 255 characters long."),
   description: z.string().optional(),
-  deadline: z.string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      error: "Deadline must be a valid ISO date string",
-    })
-    .optional(),
+  deadline: z.date().optional(),
   priority: z.enum(TodoPriority).default(TodoPriority.MEDIUM),
   status: z.enum(TodoStatus).default(TodoStatus.PENDING),
 })
@@ -48,11 +44,7 @@ export const createTodoSchema = todoBaseSchema;
 export const updateTodoSchema = z.object({
   title: z.string().min(3).optional(),
   description: z.string().optional(),
-  deadline: z.string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      error: "Deadline must be a valid ISO date string",
-    })
-    .optional(),
+  deadline: z.date().optional(),
   priority: z.enum(TodoPriority).optional(),
   status: z.enum(TodoStatus).optional(),
 })
