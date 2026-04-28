@@ -11,7 +11,7 @@ export const getAllTodos = async (): Promise<Todo[]> => {
 
 
 /**
- * get todo by id (without relations)
+ * get a specific todo by id (without relations)
  */
 export const getTodoById = async (id: number): Promise<Todo | null> => {
   return prisma.todo.findUnique({ where: { id } });
@@ -21,7 +21,7 @@ export const getTodoById = async (id: number): Promise<Todo | null> => {
 /**
  * get all todos in habit X
  */
-export async function getTodosByHabit(habitId: number): Promise<Todo[]> {
+export async function getAllTodosByHabit(habitId: number): Promise<Todo[]> {
   return prisma.todo.findMany({
     where: { habitId },
     include: { habit: true }
@@ -46,7 +46,7 @@ export async function getTodoByHabit(
 /**
  * get all todos in event Y
  */
-export async function getTodosByEvent(eventId: number): Promise<Todo[]> {
+export async function getAllTodosByEvent(eventId: number): Promise<Todo[]> {
   return prisma.todo.findMany({
     where: { eventId },
     include: { event: true }
@@ -72,20 +72,12 @@ export const createTodo = async (
   data: {
     title: string;
     description?: string | null;
-    deadline?: string | null;
+    deadline?: Date | null;
     priority: string;
     status: string;
   }
 ): Promise<Todo> => {
-  return prisma.todo.create({
-    data: {
-      title: data.title,
-      description: data.description ?? null,
-      deadline: data.deadline ?? null,
-      priority: data.priority,
-      status: data.status,
-    }
-  });
+  return prisma.todo.create({ data });
 }
 
 
@@ -95,7 +87,7 @@ export const createTodo = async (
 export async function createTodoForHabit(habitId: number, data: {
   title: string;
   description?: string | null;
-  deadline?: string | null;
+  deadline?: Date | null;
   priority: string;
   status: string;
 }): Promise<Todo> {
@@ -120,7 +112,7 @@ export async function createTodoForHabit(habitId: number, data: {
 export async function createTodoForEvent(eventId: number, data: {
   title: string;
   description?: string | null;
-  deadline?: string | null;
+  deadline?: Date | null;
   priority: string;
   status: string;
 }): Promise<Todo> {
