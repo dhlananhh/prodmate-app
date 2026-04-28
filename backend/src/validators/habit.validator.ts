@@ -26,12 +26,8 @@ export const habitBaseSchema = z.object({
     .max(255, "Habit name must be at most 255 characters long"),
   description: z.string().optional(),
   frequency: z.enum(HabitFrequency).default(HabitFrequency.DAILY),
-  startDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    error: "Start date must be a valid ISO date string",
-  }).optional(),
-  endDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    error: "End date must be a valid ISO date string",
-  }).optional(),
+  startDate: z.date().optional(),
+  endDate: z.date().optional(),
   status: z.enum(HabitStatus).default(HabitStatus.ACTIVE),
 });
 
@@ -50,12 +46,8 @@ export const updateHabitSchema = z.object({
   name: z.string().min(3).optional(),
   description: z.string().optional(),
   frequency: z.enum(HabitFrequency).optional(),
-  startDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    error: "Start date must be a valid ISO date string",
-  }).optional(),
-  endDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    error: "End date must be a valid ISO date string",
-  }).optional(),
+  startDate: z.date().optional(),
+  endDate: z.date().optional(),
   status: z.enum(HabitStatus).optional(),
 })
 
