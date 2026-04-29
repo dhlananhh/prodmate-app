@@ -6,7 +6,9 @@ import type { Todo, Prisma } from "../generated/prisma/client"
  * get all todos (without relations)
  */
 export const getAllTodos = async (): Promise<Todo[]> => {
-  return prisma.todo.findMany({ orderBy: { created_at: "desc" } });
+  return prisma.todo.findMany({
+    orderBy: { createdAt: "desc" }
+  });
 };
 
 
