@@ -93,34 +93,6 @@ const router = Router();
  *         description: Event with todos details
  *       404:
  *         description: Event not found
- *
- * /events/habit:
- *   get:
- *     summary: Retrieve all events with their linked habit
- *     tags:
- *       - Events
- *     responses:
- *       200:
- *         description: A list of events with habit relation
- *
- * /events/{id}/habit:
- *   get:
- *     summary: Retrieve a specific event with its linked habit
- *     tags:
- *       - Events
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Event with habit details
- *       404:
- *         description: Event not found
- * 
- * /events/{id}/todos:
  *   put:
  *     summary: Update an event with its todos
  *     tags:
@@ -158,7 +130,31 @@ const router = Router();
  *       404:
  *         description: Event not found
  *
+ * /events/habit:
+ *   get:
+ *     summary: Retrieve all events with their linked habit
+ *     tags:
+ *       - Events
+ *     responses:
+ *       200:
+ *         description: A list of events with habit relation
+ *
  * /events/{id}/habit:
+ *   get:
+ *     summary: Retrieve a specific event with its linked habit
+ *     tags:
+ *       - Events
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Event with habit details
+ *       404:
+ *         description: Event not found
  *   put:
  *     summary: Update an event with its linked habit
  *     tags:
