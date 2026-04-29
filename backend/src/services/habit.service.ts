@@ -6,7 +6,9 @@ import { Habit, Prisma } from "../generated/prisma/client"
  * get all habits (without relations)
  */
 export const getAllHabits = async (): Promise<Habit[]> => {
-  return prisma.habit.findMany({ orderBy: { created_at: "desc" } });
+  return prisma.habit.findMany({
+    orderBy: { createdAt: "desc" }
+  });
 };
 
 
@@ -15,7 +17,7 @@ export const getAllHabits = async (): Promise<Habit[]> => {
  */
 export const getAllHabitsWithTodos = async (): Promise<Habit[]> => {
   return prisma.habit.findMany({
-    orderBy: { created_at: "desc" },
+    orderBy: { createdAt: "desc" },
     include: { todos: true }
   })
 }
@@ -26,7 +28,7 @@ export const getAllHabitsWithTodos = async (): Promise<Habit[]> => {
  */
 export const getAllHabitsWithEvents = async (): Promise<Habit[]> => {
   return prisma.habit.findMany({
-    orderBy: { created_at: "desc" },
+    orderBy: { createdAt: "desc" },
     include: { events: true }
   });
 }
