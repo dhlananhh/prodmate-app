@@ -41,9 +41,22 @@ export const refreshSchema = z.object({
 });
 
 
+export const forgotSchema = z.object({
+  email: z.email("Invalid email format")
+});
+
+
+export const resetSchema = z.object({
+  token: z.string().min(10, "Reset token must be valid"),
+  newPassword: z.string().min(8, "Password must be at least 8 characters")
+});
+
+
 /**
  * Types inferred from schemas
  */
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RefreshInput = z.infer<typeof refreshSchema>;
+export type ForgotInput = z.infer<typeof forgotSchema>;
+export type ResetInput = z.infer<typeof resetSchema>;
