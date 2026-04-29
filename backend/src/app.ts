@@ -3,6 +3,7 @@ import express, {
   Request,
   Response
 } from "express";
+import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import env from "./config/env";
 import { logger } from "./config/logger";
@@ -25,6 +26,7 @@ const app: Application = express();
 app.use(corsConfig);
 app.use(helmetConfig);
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 // Morgan + Winston integration for request logging
@@ -58,6 +60,7 @@ app.get("/", (req: Request, res: Response) => {
     environment: env.NODE_ENV,
     endpoints: {
       health: "/api/health",
+      auth: "/api/auth",
       todos: "/api/todos",
       habits: "/api/habits",
       events: "/api/events",
