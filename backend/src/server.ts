@@ -2,7 +2,12 @@ import http from "http";
 import app from "./app";
 import env from "./config/env";
 import { logger } from "./config/logger";
-import { prisma } from "./config/database"; // Prisma client
+import { prisma } from "./config/database";
+import { setupOpenTelemetry } from "./config/otel";
+
+
+// Enable OpenTelemetry before starting the server
+setupOpenTelemetry();
 
 // Create HTTP server
 const server = http.createServer(app);
@@ -10,8 +15,10 @@ const server = http.createServer(app);
 // Start listening
 server.listen(env.PORT, () => {
   logger.info("🚀 Server started successfully");
+  logger.info(`Server running at http://localhost:${env.PORT}`);
   logger.info(`Environment: ${env.NODE_ENV}`);
   logger.info(`Listening on port: ${env.PORT}`);
+  logger.info(`Swagger docs available at: http://localhost:${env.PORT}/api-docs`);
 });
 
 // Handle server errors
