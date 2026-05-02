@@ -158,3 +158,6 @@ vite.config.ts.timestamp-*
 # Batch files for automatically committing to Git
 commit-all.bat
 commit-code.bat
+
+# Keys
+/src/config/keys/*.pem
