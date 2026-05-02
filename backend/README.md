@@ -1,7 +1,7 @@
-# ProdMate API
+# ProdMate Backend
 
 ProdMate API is a backend service built with **Node.js + Express + TypeScript**, using **MariaDB (via Prisma ORM)** for data persistence.  
-It provides endpoints to manage **Todos, Habits, and Events**, with integrated **Swagger UI** for API documentation.
+It provides endpoints to manage **Users, Todos, Habits, and Events**, with integrated **Swagger UI** for API documentation and **OpenTelemetry** for observability.
 
 ---
 
@@ -13,6 +13,8 @@ It provides endpoints to manage **Todos, Habits, and Events**, with integrated *
 - **Helmet + CORS** – Security and cross-origin support
 - **Morgan + Winston** – Logging
 - **Swagger UI + swagger-jsdoc** – API documentation
+- **OpenTelemetry** – Monitoring and tracing
+- **Nodemailer** – Email sending via SMTP
 
 ---
 
@@ -21,12 +23,15 @@ It provides endpoints to manage **Todos, Habits, and Events**, with integrated *
 ### Clone repository
 
 ```bash
-git clone https://github.com/your-repo/prodmate-api.git
-cd prodmate-api
+git clone https://github.com/your-repo/prodmate-backend.git
+cd prodmate-backend
 ```
 
 ### Install dependencies
+
+```bash
 npm install
+```
 
 ### Configure environment
 
@@ -34,25 +39,61 @@ npm install
 cp .env.example .env
 ```
 
-Edit .env to match your local setup (DB_URL, NODE_ENV, PORT, JWT_SECRET, etc.)
+Edit `.env` to match your local setup (DATABASE_URL, NODE_ENV, PORT, JWT_SECRET, PRIVATE_KEY_PATH, PUBLIC_KEY_PATH, SMTP_HOST, SMTP_PORT, EMAIL_FROM, etc.).
 
-### Development (auto reload with ts-node-dev)
+---
+
+## 🛠️ Development
+
+Run the server with auto reload:
+
+```bash
 npm run dev
+```
 
-### Build TypeScript -> JavaScript
+---
+
+## 🔨 Build & Run (Production)
+
+⚠️ **Important**: Before building and starting the server, make sure you already have or have generated two RSA key files:
+
+- `src/config/keys/private.pem` (private key)
+- `src/config/keys/public.pem` (public key)
+
+If you don’t know how to generate RSA keys, please refer to the detailed guide in [RSA.md](./docs/RSA.md)
+
+Once the keys are in place, run:
+
+```bash
+npm run copy-keys
+```
+
+Then build and start the server:
+
+```bash
 npm run build
-
-### Start server (production)
 npm start
+```
 
-### Type-check project
+## 🔖 Useful Commands
+
+- **Type-check project**:
+
+```bash
 npm run type-check
+```
 
-### Prisma migration
+- **Prisma migration**:
+
+```bash
 npx prisma migrate dev --name init
+```
 
-### Prisma Studio (UI for DB management)
+- **Prisma Studio (UI for DB management)**:
+
+```bash
 npx prisma studio
+```
 
 ---
 
@@ -63,6 +104,13 @@ npx prisma studio
 
 ### Health
 - `GET /api/health` → Server health check
+
+### Users
+- `POST /api/users/register` → Register new user  
+- `POST /api/users/login` → Login user  
+- `POST /api/users/refresh` → Refresh token  
+- `POST /api/users/forgot-password` → Send reset email  
+- `POST /api/users/reset-password` → Reset password  
 
 ### Todos
 - `GET /api/todos` → Get all todos
@@ -85,33 +133,60 @@ npx prisma studio
 - `PUT /api/events/{id}` → Update event by ID
 - `DELETE /api/events/{id}` → Delete event by ID
 
+### Metrics
+- `GET /metrics` → Retrieve traces from OpenTelemetry logs  
+
 ---
 
 ## 📖 Swagger Documentation
 
-Swagger UI is available at: `http://localhost:3000/api-docs`
+Swagger UI is available at: `http://localhost:4000/api-docs`
 
 Here you can explore all endpoints, schemas, and test API calls interactively.
 
 --- 
 
-## 🔒 Authentication & Authorization (Upcoming)
+## 🔑 RSA Key Management
 
-Future enhancements will include:
-- User table (email, username, password hash, role)
-- Signup / Login endpoints
-- JWT-based authentication
+To generate and manage RSA keys for JWT authentication, please refer to the detailed guide in: [RSA.md](./docs/RSA.md)
+
+This document explains how to create a new RSA key pair using OpenSSL, security recommendations, and how to configure the keys in the project.
+
+---
+
+## 🔒 Authentication & Authorization
+
+- JWT-based authentication (RS256 with RSA keys)
 - Role-based authorization
 
 ---
 
 ## 📝 Notes
+
 - Always run `npm run type-check` to ensure TypeScript type safety.
-- For production, use `npm run build` + `npm start`.
+- For production, ensure RSA keys exist, then use command `npm run copy-keys && npm run build && npm start`.
 - Consider Docker or PM2 for process management in deployment.
 
 ---
 
 ## 👩🏻‍💻 Author
-- ProdMate Backend – Developed and maintained solely by Lan Anh
-- Contact: dhlananh2309@gmail.com
+- ProdMate Backend – Developed and maintained by **Lan Anh**
+
+- Contact: 
+
+<div align="left">
+  <a href="mailto:dhlananh2309@gmail.com" target="_blank">
+    <img
+      src="https://img.shields.io/badge/Gmail-dhlananh2309@gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white"
+      alt="Gmail"
+    />
+  </a>
+  <a href="https://github.com/dhlananhh" target="_blank">
+    <img
+      src="https://img.shields.io/badge/GitHub-dhlananhh-blue?style=for-the-badge&logo=github"
+      alt="Github"
+    />
+  </a>
+</div>
+
+---
