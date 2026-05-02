@@ -138,6 +138,55 @@ npx prisma studio
 
 ---
 
+## 📊 Entity–Relationship Diagram (ERD)
+
+The diagram below illustrates the relationships between the main tables in the system:
+
+```mermaid
+erDiagram
+    USERS {
+        int id PK
+        string email
+        string username
+        string password
+        string name
+        string role
+        datetime createdAt
+    }
+
+    TODOS {
+        int id PK
+        string title
+        string description
+        boolean completed
+        datetime dueDate
+        int userId FK
+    }
+
+    HABITS {
+        int id PK
+        string name
+        string frequency
+        datetime startDate
+        int userId FK
+    }
+
+    EVENTS {
+        int id PK
+        string title
+        string description
+        datetime startTime
+        datetime endTime
+        int userId FK
+    }
+
+    USERS ||--o{ TODOS : "has many"
+    USERS ||--o{ HABITS : "has many"
+    USERS ||--o{ EVENTS : "has many"
+```
+
+---
+
 ## 📖 Swagger Documentation
 
 Swagger UI is available at: `http://localhost:4000/api-docs`
