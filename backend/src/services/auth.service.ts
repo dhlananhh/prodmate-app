@@ -1,11 +1,10 @@
 import { prisma } from "../config/database";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { privateKey, publicKey } from "../config/keys";
 import { sendEmail } from "../utils/email";
 
 
-const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
-const REFRESH_SECRET = process.env.REFRESH_SECRET || "refreshsecret";
 const RESET_SECRET = process.env.RESET_SECRET || "resetsecret";
 
 
@@ -20,7 +19,12 @@ export async function registerUser(
 ) {
   const hashedPassword = await bcrypt.hash(password, 10);
   return prisma.user.create({
-    data: { email, username, password: hashedPassword, name }
+    data: {
+      email,
+      username,
+      password: hashedPassword,
+      name
+    }
   });
 }
 
@@ -51,17 +55,19 @@ export async function loginUser(
     throw new Error("Invalid credentials");
   }
 
+  // access token signed with private key
   const accessToken = jwt.sign(
     { id: user.id, role: user.role },
-    JWT_SECRET,
-    { expiresIn: "45m" }
-  )
+    privateKey,
+    { algorithm: "RS256", expiresIn: "45m" }
+  );
 
+  // refresh token signed with private key
   const refreshToken = jwt.sign(
     { id: user.id },
-    REFRESH_SECRET,
-    { expiresIn: "7d" }
-  )
+    privateKey,
+    { algorithm: "RS256", expiresIn: "7d" }
+  );
 
   await prisma.refreshToken.create({
     data: {
@@ -98,7 +104,12 @@ export async function refreshAccessToken(refreshToken: string) {
     throw new Error("Refresh token expired");
   }
 
-  const decoded = jwt.verify(refreshToken, REFRESH_SECRET) as { id: number };
+  // verify using public key
+  const decoded = jwt.verify(
+    refreshToken,
+    publicKey,
+    { algorithms: [ "RS256" ] }
+  ) as { id: number };
 
   const user = await prisma.user.findUnique({
     where: { id: decoded.id }
@@ -110,8 +121,8 @@ export async function refreshAccessToken(refreshToken: string) {
 
   const newAccessToken = jwt.sign(
     { id: user?.id, role: user?.role },
-    JWT_SECRET,
-    { expiresIn: "45m" }
+    privateKey,
+    { algorithm: "RS256", expiresIn: "45m" }
   )
 
   return { accessToken: newAccessToken };
