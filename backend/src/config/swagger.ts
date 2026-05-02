@@ -2,13 +2,14 @@ import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { Application } from "express";
 
+
 const options: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.0",
     info: {
       title: "Prodmate Backend API",
       version: "1.0.0",
-      description: "API documentation for Todos, Habits, Events",
+      description: "API documentation for Prodmate backend",
     },
     servers: [
       {
@@ -16,6 +17,13 @@ const options: swaggerJsdoc.Options = {
       },
     ],
     components: {
+      securitySchemes: {
+        bearbearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
       schemas: {
         Todo: {
           type: "object",
@@ -108,12 +116,22 @@ const options: swaggerJsdoc.Options = {
         },
       }
     },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
   apis: [ "./src/routes/*.ts" ],
 }
 
 const swaggerSpec = swaggerJsdoc(options);
 
+
 export const setupSwagger = (app: Application) => {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec)
+  );
 }
