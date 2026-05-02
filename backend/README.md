@@ -83,6 +83,12 @@ npm start
 npm run type-check
 ```
 
+- **Cleanup logs**:
+
+```bash
+npm run cleanup:logs
+```
+
 - **Prisma migration**:
 
 ```bash
