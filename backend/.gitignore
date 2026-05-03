@@ -161,3 +161,6 @@ commit-code.bat
 
 # Keys
 /src/config/keys/*.pem
+
+# Temp files
+TEMP.md
