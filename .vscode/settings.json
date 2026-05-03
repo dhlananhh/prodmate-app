@@ -1,0 +1,29 @@
+{
+  "json.schemaDownload.trustedDomains": {
+    "https://esm.sh/": true,
+    "https://unpkg.com/": true,
+    "https://ui.shadcn.com/": true,
+    "https://json.schemastore.org/prettierrc": true,
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "vscode.typescript-language-features",
+  "editor.tabSize": 2,
+  "eslint.workingDirectories": [
+    { "directory": "frontend", "changeProcessCWD": true },
+    { "directory": "backend", "changeProcessCWD": true }
+  ],
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true
+  },
+  "terminal.integrated.cwd": "${workspaceFolder}"
+}
