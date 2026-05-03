@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Monolith backend for productivity webapp",
   "main": "dist/server.js",
+  "keywords": [],
+  "author": "Lan Anh",
+  "license": "ISC",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
@@ -13,12 +17,9 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:generate": "prisma generate",
     "prisma:seed": "ts-node prisma/seed.ts",
-    "cleanup:logs": "ts-node src/scripts/cleanupLogs.ts"
+    "cleanup:logs": "ts-node src/scripts/cleanupLogs.ts",
+    "prepare": "husky"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "@opentelemetry/core": "^2.7.1",
     "@opentelemetry/instrumentation": "^0.216.0",
@@ -51,6 +52,9 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-conventional": "^20.5.3",
+    "@commitlint/prompt-cli": "^20.5.3",
     "@prisma/client": "^7.8.0",
     "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.10",
@@ -65,6 +69,7 @@
     "@types/swagger-ui-express": "^4.1.8",
     "dotenv": "^17.4.2",
     "eslint": "^10.2.1",
+    "husky": "^9.1.7",
     "nodemon": "^3.1.14",
     "prettier": "^3.8.3",
     "prisma": "^7.8.0",
