@@ -33,13 +33,46 @@ cd prodmate-backend
 npm install
 ```
 
-### Configure environment
+---
 
-```bash
-cp .env.example .env
-```
+## 🔧 Environment Setup
 
-Edit `.env` to match your local setup (DATABASE_URL, NODE_ENV, PORT, JWT_SECRET, PRIVATE_KEY_PATH, PUBLIC_KEY_PATH, SMTP_HOST, SMTP_PORT, EMAIL_FROM, etc.).
+### Overview
+The backend requires environment variables to run properly.  
+A sample configuration file is provided as `.env.example`.
+
+### How to use
+
+1. **Copy the sample env file**:
+
+  ```bash
+  cp .env.example .env
+  ```
+  
+  Or on Windows: 
+
+  ```bash
+  copy .env.example .env
+  ```
+
+2. **Edit the `.env` file** to match your local or production environment:
+  - Update `DATABASE_URL` with your database connection string.
+  - Set secure values for `JWT_SECRET` and `RESET_SECRET`.
+  - Adjust `LOG_LEVEL` according to your needs (`info`, `debug`, `error`, etc.).
+  - Configure `SMTP_HOST`, `SMTP_PORT`, and `EMAIL_FROM` for email services.
+  - Provide paths for `PRIVATE_KEY_PATH` and `PUBLIC_KEY_PATH` if using RSA keys.
+
+3. **Do not commit `.env`** to the remote repository, and never share your `.env` file publicly.  
+  - `.env.example` is the template for groups or individuals.  
+  - `.env` should remain local and private.
+
+4. **Add `.env` to `.gitignore`**  
+  - Open the `.gitignore` file in the project root.  
+  - Ensure it contains the following line:
+    ```
+    .env
+    ```
+  - This prevents accidental commits of sensitive environment variables.
 
 ---
 
@@ -74,6 +107,72 @@ Then build and start the server:
 npm run build
 npm start
 ```
+
+---
+
+## 🐶 Husky Git Hooks
+
+We use **Husky** to manage Git hooks and enforce consistent workflows across the repository. Husky ensures that important checks run automatically before commits and pushes, helping us maintain code quality and a clean Git history.
+
+### How Husky works
+- **Pre-commit hook**  
+  Runs before a commit is finalized. It can be configured to check for issues such as merge conflict markers, large files, or formatting. If the checks fail, the commit will be blocked until the problems are resolved.
+
+- **Commit-msg hook**  
+  Runs after you type a commit message. It validates the message format (e.g., following Conventional Commits). If the message does not meet the rules, the commit will be rejected.
+
+- **Pre-push hook**  
+  Runs before pushing code to the remote repository. It can be configured to run additional checks, such as verifying branch naming conventions or preventing sensitive files from being pushed.
+
+### Developer workflow
+1. Stage your changes with `git add`.
+2. Run `git commit -m "message"`.  
+   - Husky triggers the **pre-commit** hook.  
+   - If checks pass, the commit succeeds.  
+   - If checks fail, fix the issues and retry.
+3. Push your branch with `git push`.  
+   - Husky triggers the **pre-push** hook (if configured).  
+   - If checks pass, the push succeeds.  
+   - If checks fail, fix the issues and retry.
+
+### Visual Workflow
+
+```mermaid
+flowchart TD
+    A[Developer writes code] --> B[git add]
+    B --> C["git commit -m 'message'"]
+
+    C --> D{Husky pre-commit hook}
+    D -->|Checks pass| E[Commit succeeds]
+    D -->|Checks fail| F[Commit blocked]
+
+    E --> G[git push]
+    G --> H{Husky pre-push hook}
+    H -->|Checks pass| I[Push succeeds]
+    H -->|Checks fail| J[Push blocked]
+```
+
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant Git as Git
+    participant Husky as Husky Hooks
+    participant Remote as Remote Repo
+
+    Dev->>Git: git commit -m "message"
+    Git->>Husky: Trigger pre-commit hook
+    Husky-->>Git: Validate checks
+    Git-->>Dev: Commit succeeds or blocked
+
+    Dev->>Git: git push
+    Git->>Husky: Trigger pre-push hook
+    Husky-->>Git: Validate checks
+    Git->>Remote: Push succeeds or blocked
+```
+
+---
 
 ## 🔖 Useful Commands
 
